@@ -6,7 +6,7 @@ We can use hybrid data storage model that means:
 1. We can use Cosmos DB to store last 3 months data for fast access.
 2. For Older records, we can use azure blob storage (using ADLS Gen2 with hierarchical namespaces).
 
-To achieve this, we can use azure Function that will check Cosmos DB first, and if not found, it fetches the record from Blob Storage — seamlessly, without changing the API interface.
+To achieve this, we can use azure Function that will check Cosmos DB first, and if not found, it fetches the record from Blob Storage, without changing the API interface.
 
 This approach can reduce our Cosmos DB usage and storage costs while keeping all records accessible to the system and users.
 
@@ -34,11 +34,11 @@ This approach can reduce our Cosmos DB usage and storage costs while keeping all
 
 
 ## Working Logic:
-1. Writing data: New records are still saved in Cosmos DB (no cha
+1. Writing data: New records are still saved in Cosmos DB
 2. Reading data: Our read function:
    a. First checks Cosmos DB.
    b. If not found and the record is old, it fetches from Blob Storage.
-3. Archiving: A nightly job moves older records from Cosmos DB to Blob Storage.
+3. Archiving: A cron job moves older records from Cosmos DB to Blob Storage.
 
 ## Benefits: 
 1. Major cost savings by reducing Cosmos DB storage and RUs.
